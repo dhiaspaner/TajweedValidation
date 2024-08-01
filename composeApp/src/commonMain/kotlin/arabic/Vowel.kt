@@ -1,0 +1,7 @@
+package arabic
+
+enum class Vowel {
+    FATHA, KASRA, DAMMA, SUKUN, SHADDA, MADDAH, TANWEENKASR,TANWEENFATH,TANWEENDHAM,Tamtit,MADDAHTAWIL
+}
+
+
