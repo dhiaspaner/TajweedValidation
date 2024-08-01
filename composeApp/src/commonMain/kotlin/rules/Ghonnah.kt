@@ -7,6 +7,8 @@ import arabic.Vowel
 class Ghonnah(
     override val color: Color,
 ) : TajweedRule {
+    override val leftLength: Int = 0
+    override val rightLength: Int = 0
     override val charSelectors: List<ArabicChar> = listOf(ArabicChar('ن'), ArabicChar('م'))
     override val vowelSelectors: List<Vowel> = emptyList()
     override val beforeCharCheckers: Map<Int, List<ArabicChar>> = emptyMap()

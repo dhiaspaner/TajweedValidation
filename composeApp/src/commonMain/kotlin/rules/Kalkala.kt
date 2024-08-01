@@ -5,6 +5,8 @@ import arabic.ArabicChar
 import arabic.Vowel
 
 class Kalkala(override val color: Color) : TajweedRule {
+    override val rightLength: Int = 1
+    override val leftLength: Int = 0
     override val charSelectors: List<ArabicChar> = listOf(
         ArabicChar('ق'),
         ArabicChar('ط'),

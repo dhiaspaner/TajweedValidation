@@ -31,7 +31,6 @@ import rules.Idhgham
 import rules.Ikhfa
 import rules.Iklab
 import rules.Kalkala
-import rules.TafkhimRaWithSukunAndSukunBeforeAndFateh
 import tajweedvalidation.composeapp.generated.resources.Res
 import tajweedvalidation.composeapp.generated.resources.border
 
@@ -72,7 +71,6 @@ fun App() {
                 Kalkala(Color.Blue),
                 Ikhfa(Color.Yellow),
                 Iklab(Color.Cyan),
-                TafkhimRaWithSukunAndSukunBeforeAndFateh(Color.Magenta)
             )
         }
 

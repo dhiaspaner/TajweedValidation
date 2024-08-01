@@ -13,7 +13,9 @@ interface TajweedRule {
     val color: Color
     val charSelectors: List<ArabicChar>
     val vowelSelectors: List<Vowel>
-    val length get() = beforeVowelCheckers.size + afterVowelCheckers.size
+    val leftLength : Int
+    val rightLength : Int
+    val length get() = leftLength + rightLength
     val beforeCharCheckers: Map<Int, List<ArabicChar>>
     val afterCharCheckers: Map<Int, List<ArabicChar>>
     val beforeVowelCheckers: Map<Int, List<Vowel>>
@@ -55,19 +57,19 @@ interface TajweedRule {
 
     private fun getBeforeChars(text: ArabicText, wordIndex: Int, charIndex: Int): List<ArabicChar> {
         val word = text.words[wordIndex]
-        val leftLength = beforeCharCheckers.size
-        if (charIndex - leftLength < 0) {
-            val newIndex = charIndex - leftLength
+        val beforeCharSize = beforeCharCheckers.size
+        if (charIndex - beforeCharSize < 0 && abs(charIndex - beforeCharSize + 1) < word.chars.size) {
+            val newIndex = abs(charIndex - beforeCharSize + 1)
             if (text.words[wordIndex - 1].chars.size > newIndex) {
                 val previousWord = text.words[wordIndex - 1]
                 val beforeSet =
-                    previousWord.chars.subList(previousWord.chars.size - newIndex, previousWord.chars.size) +
-                            word.chars.subList(charIndex, word.chars.size)
+                    previousWord.chars.subList(newIndex, previousWord.chars.size) +
+                            word.chars.subList(0, charIndex + 1)
                 return beforeSet
             }
             return emptyList()
         }
-        val beforeSet = text.words[wordIndex].chars.subList(charIndex - leftLength, charIndex)
+        val beforeSet = text.words[wordIndex].chars.subList(charIndex - beforeCharSize, charIndex)
         return beforeSet
     }
 
@@ -147,7 +149,7 @@ interface TajweedRule {
         afterVowelSet: List<Vowel>,
         currentChar: ArabicChar
     ): Boolean {
-        if (beforeCharSet.size < beforeCharCheckers.size || afterCharSet.size < afterCharCheckers.size) return false
+        if (beforeCharSet.size < leftLength || afterCharSet.size < rightLength) return false
         return isBeforeCharSetValid(beforeCharSet) &&
                 isAfterCharSetValid(afterCharSet) &&
                 isBeforeVowelSetValid(beforeVowelSet) &&
